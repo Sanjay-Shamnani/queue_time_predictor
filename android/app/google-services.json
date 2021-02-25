@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "862352943262",
+    "project_id": "queue-time-predictor",
+    "storage_bucket": "queue-time-predictor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862352943262:android:eb784ecd95a78ba4eb338f",
+        "android_client_info": {
+          "package_name": "com.example.queue_time_predictor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862352943262-tqm72olumi1iree766ih9525ih8vsolq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.queue_time_predictor",
+            "certificate_hash": "0611b13e3dfeba1bbe20d218b9ef01cb7c1642b7"
+          }
+        },
+        {
+          "client_id": "862352943262-jtlvqed8k92rjscv4vpi6n8ti4fq3ju0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsOPoxiPhJhoYuNaFXjBblFYY1uLHhHVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862352943262-jtlvqed8k92rjscv4vpi6n8ti4fq3ju0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
