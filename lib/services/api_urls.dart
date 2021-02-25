@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 class ApiUrls {
-  String doctorPredictionUrl(Map<dynamic, dynamic> data) {
+  String doctorPredictionUrl(Map<dynamic, dynamic> data, int ft, docrate) {
     String url =
-        'https://dbpqt9.herokuapp.com/predict_api/?mr3=${data['mr3']}&td=${data['td']}&ft=${data['ft']}&nq=${data['nq']}&dr=${data['dr']}';
+        'https://dbpqt9.herokuapp.com/predict_api/?mr3=${data['mr3']}&td=${data['td']}&ft=$ft&nq=${data['nq']}&dr=$docrate';
+    print(url);
     return url;
   }
 

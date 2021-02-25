@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:queue_time_predictor/constants/api_urls.dart';
+import 'package:queue_time_predictor/services/api_urls.dart';
 import 'package:queue_time_predictor/constants/strings.dart';
 
 class DoctorQueue extends StatefulWidget {
@@ -18,12 +18,19 @@ class _DoctorQueueState extends State<DoctorQueue> {
   ApiUrls _urls = ApiUrls();
 
   fetchDoctorData() async {
+    Map appDetails = {};
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection(parameters);
     QuerySnapshot querySnapshot = await collectionReference.get();
     data = querySnapshot.docs[0].data();
-    url = _urls.doctorPredictionUrl(data);
-    fetchWaitingTime(url);
+    http.Response response = await http
+        .get('https://pqt9queuewaittime.herokuapp.com/apt-detail/aadarsh/');
+    if (response.statusCode == 200) {
+      appDetails = json.decode(response.body);
+      int ft = (appDetails["firsttime"] == "Yes") ? 1 : 0; 
+      url = _urls.doctorPredictionUrl(data, ft, appDetails['docrate']);
+      fetchWaitingTime(url);
+    }
   }
 
   fetchWaitingTime(String url) async {

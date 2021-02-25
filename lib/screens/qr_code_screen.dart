@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:queue_time_predictor/screens/blood_test.dart';
 import 'package:queue_time_predictor/screens/doctor_queue.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:queue_time_predictor/screens/xray_queue.dart';
 
 class QRCodeScreen extends StatefulWidget {
@@ -13,16 +13,10 @@ class QRCodeScreen extends StatefulWidget {
 }
 
 class _QRCodeScreenState extends State<QRCodeScreen> {
-  String _qrData = "";
+  String _qrData;
 
   scanQRcode() async {
-    await FlutterBarcodeScanner.scanBarcode(
-            "#000000", "Cancel", true, ScanMode.QR)
-        .then((value) {
-      setState(() {
-        _qrData = value;
-      });
-    });
+    _qrData = await scanner.scan();
   }
 
   @override
@@ -62,6 +56,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                   scanQRcode();
                   switch (_qrData) {
                     case "doctor":
+                    _qrData = '';
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -69,6 +64,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                                   DoctorQueue()));
                       break;
                     case "bloodtest":
+                    _qrData = '';
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -76,6 +72,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                                   BloodTestQueue()));
                       break;
                     case "x-ray":
+                    _qrData = '';
                       Navigator.push(
                           context,
                           MaterialPageRoute(

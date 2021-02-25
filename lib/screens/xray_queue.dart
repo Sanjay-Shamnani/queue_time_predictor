@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:queue_time_predictor/constants/api_urls.dart';
+import 'package:queue_time_predictor/services/api_urls.dart';
 import 'package:queue_time_predictor/constants/strings.dart';
 
 class XrayQueue extends StatefulWidget {
