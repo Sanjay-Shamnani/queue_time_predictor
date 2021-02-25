@@ -11,7 +11,11 @@ class ApiUrls {
     return url;
   }
 
-  String bloodtestPredictionUrl(Map<dynamic, dynamic> data, String ageGroup) {
+  String bloodtestPredictionUrl(Map<dynamic, dynamic> data, int ageGroup) {
     return "https://bloodtestpqt9.herokuapp.com/predict_api/?nm=${data['nm']}&nq=${data['nq']}&age=$ageGroup";
+  }
+
+  String userUrl(String userName) {
+    return "https://pqt9queuewaittime.herokuapp.com/usr-detail/$userName/";
   }
 }

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:queue_time_predictor/screens/queue_screen.dart';
+import 'package:queue_time_predictor/screens/blood_test.dart';
+import 'package:queue_time_predictor/screens/doctor_queue.dart';
+import 'package:queue_time_predictor/screens/xray_queue.dart';
 
 class QRCodeScreen extends StatefulWidget {
+  final String userName;
+
+  QRCodeScreen({this.userName});
   @override
   _QRCodeScreenState createState() => _QRCodeScreenState();
 }
@@ -24,12 +29,30 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text("Queue Time Predictor"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Container(
+              child: Column(
+                children: [
+                  Text(
+                    'Welcome, ${widget.userName}',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Scan QR Code Here!!!',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
             Container(
               width: 250,
               height: 45,
@@ -39,25 +62,24 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                   scanQRcode();
                   switch (_qrData) {
                     case "doctor":
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  QueueScreen(queueType: _qrData,)));
+                                  DoctorQueue()));
                       break;
                     case "bloodtest":
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  QueueScreen(queueType: _qrData,)));
+                                  BloodTestQueue()));
                       break;
                     case "x-ray":
-                      Navigator.pushReplacement(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  QueueScreen(queueType: _qrData,)));
+                              builder: (BuildContext context) => XrayQueue()));
                       break;
                     default:
                       showDialog(

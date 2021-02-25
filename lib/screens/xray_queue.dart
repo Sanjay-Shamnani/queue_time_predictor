@@ -6,37 +6,16 @@ import 'package:http/http.dart' as http;
 import 'package:queue_time_predictor/constants/api_urls.dart';
 import 'package:queue_time_predictor/constants/strings.dart';
 
-class QueueScreen extends StatefulWidget {
-  final String queueType;
-
-  QueueScreen({this.queueType});
-
+class XrayQueue extends StatefulWidget {
   @override
-  _QueueScreenState createState() => _QueueScreenState();
+  _XrayQueueState createState() => _XrayQueueState();
 }
 
-class _QueueScreenState extends State<QueueScreen> {
+class _XrayQueueState extends State<XrayQueue> {
   Map waitingTimeResponse;
   Map data;
   String url;
   ApiUrls _urls = ApiUrls();
-
-  @override
-  void initState() {
-    switch (widget.queueType) {
-      case "doctor":
-        print(widget.queueType);
-        fetchDoctorData();
-        break;
-      case "x-ray":
-        print(widget.queueType);
-        fetchXrayData();
-        break;
-      default:
-        fetchDoctorData();
-    }
-    super.initState();
-  }
 
   fetchXrayData() async {
     CollectionReference collectionReference =
@@ -44,17 +23,6 @@ class _QueueScreenState extends State<QueueScreen> {
     QuerySnapshot querySnapshot = await collectionReference.get();
     data = querySnapshot.docs[0].data();
     url = _urls.xrayPredictionUrl(data);
-    print(url);
-    fetchWaitingTime(url);
-  }
-
-  fetchDoctorData() async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(parameters);
-    QuerySnapshot querySnapshot = await collectionReference.get();
-    data = querySnapshot.docs[0].data();
-    url = _urls.doctorPredictionUrl(data);
-    print(url);
     fetchWaitingTime(url);
   }
 
@@ -72,24 +40,26 @@ class _QueueScreenState extends State<QueueScreen> {
   incrementNQ() async {
     Map tempData = data;
     tempData['nq'] = data['nq'] + 1;
-    String qType;
-    if (widget.queueType == "doctor")
-      qType = parameters;
-    else
-      qType = xrayparameters;
-
-    print(qType);
     CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection(qType);
+        FirebaseFirestore.instance.collection(xrayparameters);
     QuerySnapshot querySnapshot = await collectionReference.get();
     querySnapshot.docs[0].reference.update(tempData);
+  }
+
+  @override
+  void initState() {
+    fetchXrayData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text("Queue Time Predictor"),
       ),
       body: Center(
