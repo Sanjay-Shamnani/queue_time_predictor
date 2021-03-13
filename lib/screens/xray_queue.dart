@@ -48,13 +48,13 @@ class _XrayQueueState extends State<XrayQueue> {
   }
 
   sendWaitingTime() async {
+    print("object");
     String url = ApiUrls().waitCreateUrl();
-    Map<String, String> waitingTime = {
-      "waiting": "${waitingTimeResponse["prediction"]}"
-    };
-
-    final reponse = await http.post(url, body: waitingTime);
-
+    print(url);
+    final reponse = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"waiting": waitingTimeResponse["prediction"]}));
+    print(reponse.statusCode);
     if (reponse.statusCode == 200) {
       print("waiting Time sent successfully");
     }
@@ -88,8 +88,7 @@ class _XrayQueueState extends State<XrayQueue> {
                       )),
                   Text(
                     waitingTimeResponse["prediction"]
-                        .toString()
-                        .substring(0, 2),
+                        .toString(),
                     style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
                   ),
                   Text("Minutes",

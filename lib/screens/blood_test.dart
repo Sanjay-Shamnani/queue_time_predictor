@@ -54,13 +54,14 @@ class _BloodTestQueueState extends State<BloodTestQueue> {
   }
 
   sendWaitingTime() async {
-
+    print("object");
     String url = ApiUrls().waitCreateUrl();
-    Map<String, String> waitingTime = {"waiting" : "${waitingTimeResponse["prediction"]}"};
-
-    final reponse = await http.post(url, body: waitingTime);
-
-    if(reponse.statusCode == 200) {
+    print(url);
+    final reponse = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"waiting": waitingTimeResponse["prediction"]}));
+    print(reponse.statusCode);
+    if (reponse.statusCode == 200) {
       print("waiting Time sent successfully");
     }
   }
@@ -122,9 +123,7 @@ class _BloodTestQueueState extends State<BloodTestQueue> {
                                       fontSize: 25,
                                     )),
                                 Text(
-                                  waitingTimeResponse["prediction"]
-                                      .toString()
-                                      .substring(0, 2),
+                                  waitingTimeResponse["prediction"].toString(),
                                   style: TextStyle(
                                       fontSize: 45,
                                       fontWeight: FontWeight.bold),
