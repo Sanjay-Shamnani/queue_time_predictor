@@ -49,6 +49,20 @@ class _BloodTestQueueState extends State<BloodTestQueue> {
     setState(() {
       _isLoading = false;
     });
+
+    sendWaitingTime();
+  }
+
+  sendWaitingTime() async {
+
+    String url = ApiUrls().waitCreateUrl();
+    Map<String, String> waitingTime = {"waiting" : "${waitingTimeResponse["prediction"]}"};
+
+    final reponse = await http.post(url, body: waitingTime);
+
+    if(reponse.statusCode == 200) {
+      print("waiting Time sent successfully");
+    }
   }
 
   @override

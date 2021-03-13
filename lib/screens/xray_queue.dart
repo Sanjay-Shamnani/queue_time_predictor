@@ -44,6 +44,20 @@ class _XrayQueueState extends State<XrayQueue> {
         FirebaseFirestore.instance.collection(xrayparameters);
     QuerySnapshot querySnapshot = await collectionReference.get();
     querySnapshot.docs[0].reference.update(tempData);
+    sendWaitingTime();
+  }
+
+  sendWaitingTime() async {
+    String url = ApiUrls().waitCreateUrl();
+    Map<String, String> waitingTime = {
+      "waiting": "${waitingTimeResponse["prediction"]}"
+    };
+
+    final reponse = await http.post(url, body: waitingTime);
+
+    if (reponse.statusCode == 200) {
+      print("waiting Time sent successfully");
+    }
   }
 
   @override

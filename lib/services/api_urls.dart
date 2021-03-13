@@ -1,11 +1,12 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-
 class ApiUrls {
   String doctorPredictionUrl(Map<dynamic, dynamic> data, int ft, docrate) {
+    int td = 0;
+    int currentTime = DateTime.now().hour;
+
+    td = (currentTime > 16) ? 2 : 1;
+
     String url =
-        'https://dbpqt9.herokuapp.com/predict_api/?mr3=${data['mr3']}&td=${data['td']}&ft=$ft&nq=${data['nq']}&dr=$docrate';
+        'https://dbpqt9.herokuapp.com/predict_api/?mr3=${data['mr3']}&td=$td&ft=$ft&nq=${data['nq']}&dr=$docrate';
     print(url);
     return url;
   }
@@ -22,5 +23,9 @@ class ApiUrls {
 
   String userUrl(String userName) {
     return "https://pqt9queuewaittime.herokuapp.com/usr-detail/$userName/";
+  }
+
+  String waitCreateUrl() {
+    return "https://pqt9queuewaittime.herokuapp.com/wait-create/";
   }
 }
